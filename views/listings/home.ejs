@@ -122,7 +122,10 @@
           <p class="card-text"><%=data.location%></p>
           <p class="card-text"><%=data.country%></p>
           
-          <a href="/listings/details/<%=data._id%>" class="btn btn-primary" >Details</a>
+          <form action="/listings/details/<%= data._id %>" method="GET">
+            <button type="submit" class="btn btn-primary">Details</button>
+          </form>
+          
         </div>
       </div>
     
