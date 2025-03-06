@@ -1,0 +1,100 @@
+<% layout("./layouts/boilerplate.ejs") %>
+
+<div class="edit row">
+    <div class="col-8">
+        <form action="/listings/edit/<%= details._id %>?_method=PUT" method="POST" novalidate class="needs-validation" enctype="multipart/form-data">
+            <div class="mb-4">
+                <label for="Title" class="form-label">Title</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="Title"
+                    name="title"
+                    value="<%= details.title %>"
+                    placeholder="Enter the title"
+                    required
+                >
+                <div class="valid-feedback">Looks good!</div>
+                <div class="invalid-feedback">Please enter a valid title</div>
+            </div>
+            <div class="mb-4">
+                <p>Original image</p>
+                <img src="<%=originalimage%>" style="height: 120px;width: 200px;">
+            </div>
+            
+            <div class="mb-4">
+                <label for="Image" class="form-label">Uplolad image</label>
+                <input
+                type="file"
+                class="form-control"
+                id="Image"
+                name="image"
+                
+                
+                >
+                <div class="valid-feedback">Looks good!</div>
+                <div class="invalid-feedback">Please enter a valid image URL</div>
+            </div>
+            <div class="mb-4">
+                <label for="Description" class="form-label">Description</label>
+                <textarea
+                    name="description"
+                    id="Description"
+                    class="form-control"
+                    placeholder="Enter the description"
+                    rows="5"
+                    required
+                ><%= details.description %></textarea>
+                <div class="valid-feedback">Looks good!</div>
+                <div class="invalid-feedback">Please enter a valid description</div>
+            </div>
+            <div class="row">
+                <div class="mb-4 col-md-4">
+                    <label for="Price" class="form-label">Price</label>
+                    <input
+                        
+                        class="form-control"
+                        
+                        id="Price"
+                        name="price"
+                        value="<%= details.price %>"
+                        placeholder="Enter the price"
+                        required
+                    >
+                    <div class="valid-feedback">Looks good!</div>
+                <div class="invalid-feedback">Please enter a valid price</div>
+                </div>
+                <div class="mb-4 col-md-8">
+                    <label for="Country" class="form-label">Country</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="Country"
+                        name="country"
+                        value="<%= details.country %>"
+                        placeholder="Enter the country"
+                        required
+                    >
+                    <div class="valid-feedback">Looks good!</div>
+                <div class="invalid-feedback">Please enter a valid country</div>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label for="Location" class="form-label">Location</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="Location"
+                    name="location"
+                    value="<%= details.location %>"
+                    placeholder="Enter the location"
+                    required
+                >
+                <div class="valid-feedback">Looks good!</div>
+                <div class="invalid-feedback">Please enter a valid location</div>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+    </div>
+</div>
