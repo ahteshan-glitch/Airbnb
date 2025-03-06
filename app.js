@@ -84,10 +84,8 @@ main()
 
 
 
-  app.get("/", async(req,res)=>{
-    const listings=await Listing.find()
-    res.send("welcome to air bnb")
-    // res.render("listings/home.ejs",{listings})
+  app.get("/", (req, res) => {
+    res.redirect("/listings");
   });
 
 // Routes for listings

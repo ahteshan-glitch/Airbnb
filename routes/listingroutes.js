@@ -9,7 +9,7 @@ const { storage } = require("../cloudconfig.js");
 const upload = multer({ storage });
 
 // Homepage
-// router.get("/", wrapasync(controller.homepage));
+router.get("/", wrapasync(controller.homepage));
 
 // Details
 router.get("/details/:id", wrapasync(controller.details));
