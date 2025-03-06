@@ -11,7 +11,7 @@ const methodOverride = require("method-override");
 const ejsmate = require("ejs-mate");
 
 const ExpressError = require("./utils/expresserror.js");
-
+const Listing = require("./schema/listing.js");
 const listingroutes = require("./routes/listingroutes.js");
 const reviewroutes = require("./routes/reviewroutes.js");
 const user=require("./routes/userrouter.js")
@@ -84,9 +84,11 @@ main()
 
 
 
-  app.get("/", (req, res) => {
-    res.send("Server is running!");
-});
+  app.get("/", async(req,res)=>{
+    const listings=await Listing.find()
+    
+    res.render("listings/home.ejs",{listings})
+  });
 
 // Routes for listings
 app.use("/", user)

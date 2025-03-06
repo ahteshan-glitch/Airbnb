@@ -1,9 +1,9 @@
 const Listing = require("../schema/listing.js");
-module.exports.homepage=async(req,res)=>{
-    const listings=await Listing.find()
+// module.exports.homepage=async(req,res)=>{
+//     const listings=await Listing.find()
     
-    res.render("listings/home.ejs",{listings})
-  }
+//     res.render("listings/home.ejs",{listings})
+//   }
 module.exports.details=async(req,res)=>{
   let {id}=req.params
   let details = await Listing.findById(id)
