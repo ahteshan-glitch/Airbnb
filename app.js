@@ -84,7 +84,9 @@ main()
 
 
 
-
+  app.get("/", (req, res) => {
+    res.send("Server is running!");
+});
 
 // Routes for listings
 app.use("/", user)
