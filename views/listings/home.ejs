@@ -1,62 +1,123 @@
 <%layout("./layouts/boilerplate.ejs")%>
 <style>
-  .filters{
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 1rem;
-    
-    align-self: center;
+  body {
+    overflow-x: hidden;
   }
-  .filter{
+  /* Filters container with horizontal scrolling on small screens */
+  .filters {
+    display: flex;
+    flex-wrap: nowrap;
+    margin-top: 1rem;
+    align-self: center;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+  }
+  .filters::-webkit-scrollbar {
+    display: none;
+  }
+  /* Filter items */
+  .filter {
     text-align: center;
     margin-right: 2.5rem;
     opacity: 0.8;
+    flex: 0 0 auto;
   }
-  .filter:hover{
+  .filter:hover {
     opacity: 1;
     cursor: pointer;
   }
-  .filter p{
+  .filter p {
     font-size: 0.8rem;
   }
-  .gst{
+  .gst {
     display: none;
   }
+  
+  /* New Toggle Button Styles */
   #togglebtn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    margin-left: auto;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     border: 1px solid #ddd;
     border-radius: 0.75rem;
     height: 2.75rem;
+    padding: 0 1rem;
     display: flex;
     align-items: center;
-    padding: 0 1rem;
-    background: linear-gradient(to right, #f8f9fa 0%, #f1f3f5 100%);
     transition: all 0.2s ease;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    margin-left: auto; /* Pushes to far right */
   }
-
-  #togglebtn:hover {
-    background: linear-gradient(to right, #f1f3f5 0%, #e9ecef 100%);
-    box-shadow: 0 3px 6px rgba(0,0,0,0.08);
-    transform: translateY(-1px);
+  /* Media Query for small screens */
+  @media (max-width: 576px) {
+    #togglebtn {
+      padding: 0 0.8rem;
+      height: 2.5rem;
+    }
+    #togglebtn .form-check-label {
+      font-size: 0.8rem;
+    }
   }
-
-  #togglebtn:active {
-    transform: translateY(0);
+  
+  /* Existing media queries for filters/cards */
+  @media (max-width: 720px) {
+    .card {
+      width: 35rem !important;
+    }
   }
-
-  #togglebtn .form-check-label {
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: #495057;
-    margin-right: 0.75rem;
+  @media (max-width: 768px) {
+    .filters {
+      padding: 0 1rem 1rem;
+      margin-left: -1rem;
+      margin-right: -1rem;
+      width: calc(100% + 2rem);
+      mask-image: linear-gradient(to right, 
+        transparent 0%, 
+        black 2rem, 
+        black calc(100% - 2rem), 
+        transparent 100%
+      );
+      -webkit-mask-image: linear-gradient(to right, 
+        transparent 0%, 
+        black 2rem, 
+        black calc(100% - 2rem), 
+        transparent 100%
+      );
+    }
+    .filter {
+      margin-right: 1.5rem;
+    }
+    .cards {
+      margin: 0;
+      padding: 0;
+    }
+    .card {
+      width: 100% !important;
+    }
   }
-
-  #togglebtn .form-check-input {
-    margin-left: 0.5rem;
-    cursor: pointer;
+  @media (max-width: 480px) {
+    .filter {
+      margin-right: 1rem;
+    }
+    .filter p {
+      font-size: 0.7rem;
+    }
   }
 </style>
+
+<!-- Toggle Button (moved outside filters) -->
+<div id="togglebtn">
+  <div class="form-check-reverse form-switch">
+    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+    <label class="form-check-label" for="flexSwitchCheckDefault">Display total after taxes</label>
+  </div>
+</div>
+
+<!-- Filters Container -->
 <div class="filters">
   <div class="filter">
     <div><i class="fa-solid fa-fire"></i></div>
@@ -102,56 +163,39 @@
     <div><i class="fa-solid fa-cable-car"></i></div>
     <p>Cable house</p>
   </div>
-  <div id="togglebtn">
-    <div class="form-check-reverse form-switch">
-      <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-      <label class="form-check-label" for="flexSwitchCheckDefault">Display total after taxes</label>
-    </div>
-  </div>
 </div>
+
 <body>
   <div class="cards row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
-    <%for(data of listings){%>
-        
-      <div class="card col list-card" style="width: 22rem;">
-        <img src="<%=data.image.url%>" class="card-img-top" alt="image" style="height: 18rem;">
+    <% for(let data of listings){ %>
+      <div class="card col list-card" style="width: 30rem;">
+        <img src="<%= data.image.url %>" class="card-img-top" alt="image" style="height: 18rem;">
         <div class="card-body">
-          <h5 class="card-title"><%=data.title%></h5>
-          <p class="card-text"><%=data.description%></p>
-          <p class="card-text"><%=data.price%><i class="gst">&nbsp;&nbsp;+18% GST</i></p>
-          <p class="card-text"><%=data.location%></p>
-          <p class="card-text"><%=data.country%></p>
-          
+          <h5 class="card-title"><%= data.title %></h5>
+          <p class="card-text"><%= data.description %></p>
+          <p class="card-text"><%= data.price %><i class="gst">&nbsp;&nbsp;+18% GST</i></p>
+          <p class="card-text"><%= data.location %></p>
+          <p class="card-text"><%= data.country %></p>
           <form action="/listings/details/<%= data._id %>" method="GET">
             <button type="submit" class="btn btn-primary">Details</button>
           </form>
-          
         </div>
       </div>
-    
-<%}%>
+    <% } %>
   </div>
-      
-   
     
-<script>
-  let toggle=document.getElementById("togglebtn")
-  toggle.addEventListener("click",()=>{
-    let tax=document.getElementsByClassName("gst")
-    
-   for(info of tax){
-    if(info.style.display!="inline"){
-      info.style.display="inline"
-    }
-    else{
-    info.style.display="none"
-   }
-
-
-  
-   }
-  
-  
-  })
-</script>
-
+  <script>
+    // Toggle GST display on checkbox click
+    let toggle = document.getElementById("flexSwitchCheckDefault");
+    toggle.addEventListener("click", () => {
+      let tax = document.getElementsByClassName("gst");
+      for (let info of tax) {
+        if (info.style.display !== "inline") {
+          info.style.display = "inline";
+        } else {
+          info.style.display = "none";
+        }
+      }
+    });
+  </script>
+</body>
